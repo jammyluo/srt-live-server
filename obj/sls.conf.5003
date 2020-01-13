@@ -1,0 +1,15 @@
+srt {
+  worker_threads  6;
+  log_file logs/info.log.5003 ; 
+  log_level info;
+  
+  worker_connections 100 ;
+  server {
+    publisher_port 5003;
+    player_port 5013;
+    latency 100; #ms
+    backlog 100; #accept connections at the same time
+    publisher_monitor 34833862:34833863:34833864:34833865:34833866:34833867:34833868:34833869;
+    player_monitor 34833925:34833926:34833927:34833928:34833929:34833930:34833931:34833932;
+  }
+}

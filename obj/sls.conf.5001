@@ -1,0 +1,19 @@
+srt {
+  worker_threads  6;
+  log_file logs/info.log.5001 ; 
+  log_level info;
+  
+  worker_connections 100 ;
+  server {
+    publisher_port 5001;
+    player_port 5011;
+    latency 100; #ms
+    backlog 100; #accept connections at the same time
+    publisher_monitor 34833846:34833847:34833848:34833849:34833850:34833851:34833852:34833853;
+    player_monitor 34833909:34833910:34833911:34833912:34833913:34833914:34833915:34833916;
+    forwarder{
+        host 9.140.148.67;
+        port 6001;
+    }
+  }
+}
