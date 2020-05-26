@@ -7,8 +7,8 @@ srt {
     
     server {
         listen 5000; 
-        listen_publisher 5004;
-        listen_player 5014;
+        listen_publisher 5001;
+        listen_player 5011;
         latency 100; #ms
         monitor_publisher 0:0:0:0:0:0:0:0;
         monitor_player 0:0:0:0:0:0:0:0;

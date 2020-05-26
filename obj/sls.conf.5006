@@ -1,15 +1,38 @@
 srt {
-  worker_threads  6;
-  log_file logs/info.log.5006 ; 
-  log_level info;
-  
-  worker_connections 100 ;
-  server {
-    publisher_port 5006;
-    player_port 5016;
-    latency 100; #ms
-    backlog 100; #accept connections at the same time
-    publisher_monitor 34833886:34833887:34833888:34833889:34833890:34833891:34833892:34833893;
-    player_monitor 34833949:34833950:34833951:34833952:34833953:34833954:34833955:34833956;
-  }
+    worker_threads  1;
+    worker_connections 300 ;
+		
+    log_file logs/error.log ; 
+    log_level info;
+    
+    server {
+        listen 5000; 
+        listen_publisher 5006;
+        listen_player 5016;
+        latency 100; #ms
+        monitor_publisher 0:0:0:0:0:0:0:0;
+        monitor_player 0:0:0:0:0:0:0:0;
+        domain_player live.tga.qq.com;
+        domain_publisher uplive.tga.qq.com;
+        backlog 100; #accept connections at the same time
+        idle_streams_timeout 10;#s -1: unlimited
+        app {
+            app_player live ;           
+            app_publisher live ; 
+            #relay {
+            #    type pull;
+            #    mode loop;#loop; hash;
+            #    reconnect_interval 10;
+            #    idle_streams_timeout -1;#s -1: unlimited
+            #    upstreams 127.0.0.1:9090?streamid=live.sls.com/live 192.168.1.100:8080/?streamid=live.test.com/live;
+            #}
+            #relay {
+            #    type push;
+            #    mode all; #all; hash
+            #    reconnect_interval 10;
+            #    idle_streams_timeout 10;#s -1: unlimited
+            #    upstreams 192.168.31.106:8080?streamid=uplive.sls.com/live ;
+            #}          
+        }
+    }
 }
